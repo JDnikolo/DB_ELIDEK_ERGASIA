@@ -40,7 +40,8 @@
       "parser": "@babel/eslint-parser"
     },
     "rules": {
-      "indent": "off"
+      "indent": "off",
+      "max-len": 0
     }
   },
   "browserslist": [

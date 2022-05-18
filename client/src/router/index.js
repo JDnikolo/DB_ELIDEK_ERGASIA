@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Ping from '../components/Ping.vue';
+import Project from '../components/Ping.vue';
+import Field from '../components/Fields.vue';
 
 Vue.use(Router);
 
@@ -9,9 +10,14 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/ping',
-      name: 'Ping',
-      component: Ping,
+      path: '/projects',
+      name: 'Project_Page',
+      component: Project,
+    },
+    {
+      path: '/fields',
+      name: 'Fields_Page',
+      component: Field,
     },
   ],
 });

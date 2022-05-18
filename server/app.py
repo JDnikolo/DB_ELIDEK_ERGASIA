@@ -168,5 +168,46 @@ where p.e_id in (select e_id from part_of po where po.Name='{}'){}){}'''.format(
     return jsonify(myresult)
 
 
+@app.route('/byProjCount', methods=['GET'])
+def returnOrgsByProjectCount():
+    result = []
+    having = ''
+    connect = ''
+    select = 'count(*) as proj1, '
+    having = 'having '
+
+    year = request.args.get('year')
+    if year != None and year != '':
+        select = 'COUNT(IF(year(p.start_date)={}, 1, NULL)) as proj1, '.format(
+            year)
+        if request.args.get('consecutive') == 'true':
+            select += 'COUNT(IF(year(p.start_date)={}, 1, NULL)) as proj2, '.format(int(year)+1)
+            if request.args.get('equal') == 'true':
+                having += 'proj1=proj2'
+                connect = ' and '
+
+    if request.args.get('num') != None:
+        having += ' {} proj1'.format(connect)
+        comp = ''
+        if request.args.get('more') == 'true':
+            comp += '>'
+        if request.args.get('less') == 'true':
+            comp += '<'
+        having += '{}={}'.format(comp, request.args.get('num'))
+        connect = ' and '
+        if request.args.get('consecutive') == 'true':
+            having += '{} proj2{}={}'.format(connect,
+                                             comp, request.args.get('num'))
+    if having == 'having ':
+        having = 'having proj1>0 '
+    sql = '''select {} o.* from organization o 
+join project p on p.abrv = o.abrv 
+group by o.abrv {} order by proj1 desc '''.format(select, having)
+    print(sql)
+    mycursor.execute(sql)
+    result = mycursor.fetchall()
+    return jsonify(result)
+
+
 if __name__ == '__main__':
     app.run()

@@ -16,6 +16,12 @@
                 Or Less
             </label>
         </div>
+        <div>
+            <label for="excludeWithoutD">
+                <input type="checkbox" id="excludeWithoutD" v-model="exclude" v-on:change="getResults">
+                Exclude Projects without Deliverables
+            </label>
+        </div>
         <div>Sort by:
             <label for="reverse">
                 <input type="checkbox" id="reverse" v-bind="reverse" :disabled="!byProj && !byActive && !byAge"
@@ -74,6 +80,8 @@ export default {
             age: '',
             greater: false,
             lesser: false,
+            exclude: false,
+            reverse: false,
             byProj: false,
             byActive: false,
             byAge: false,
@@ -95,6 +103,10 @@ export default {
             if (this.byAge) {
                 path += `byAge=${this.byAge}&`;
             }
+            if (this.exclude) {
+                path += `exclude=${this.exclude}&`;
+            }
+            console.log(this.exclude)
             axios.get(path)
                 .then((res) => {
                     this.results = res.data;

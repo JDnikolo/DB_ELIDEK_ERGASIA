@@ -261,6 +261,7 @@ def returnResearchers():
         where += 'timestampdiff(year,r.date_of_birth,now()){}{} '.format(op, age)
     proj = request.args.get('byProj')
     active = request.args.get('byActive')
+    exclude = request.args.get("exclude")
     extrajoin = ''
     if active == 'true':
         proj = 'true'
@@ -268,12 +269,23 @@ def returnResearchers():
         if usewhere:
             where += ' and p.start_date <now() and p.end_date >now()'
         else:
+            usewhere = True
             where += ' where p.start_date <now() and p.end_date >now()'
     age = request.args.get('byAge')
     extraorder = ''
     if age == 'true':
         extraorder = 'age,'
     if proj == 'true':
+        if exclude == 'true':
+            if usewhere:
+                where += '''and wi.e_id in(
+select p.e_id  from project p 
+where p.e_id not in (select e_id from deliverable d)) '''
+            else:
+                usewhere = True
+                where = '''where wi.e_id in(
+select p.e_id  from project p 
+where p.e_id not in (select e_id from deliverable d)) '''
         sql = '''select count(*) as projs,r.name ,r.surname, timestampdiff(year,r.date_of_birth,now()) as age  from researcher r
 join works_in wi
 on wi.r_id =r.r_id 

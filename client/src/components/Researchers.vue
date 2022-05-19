@@ -106,7 +106,6 @@ export default {
             if (this.exclude) {
                 path += `exclude=${this.exclude}&`;
             }
-            console.log(this.exclude)
             axios.get(path)
                 .then((res) => {
                     this.results = res.data;

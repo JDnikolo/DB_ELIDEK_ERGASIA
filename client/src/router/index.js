@@ -6,6 +6,7 @@ import OrgByCount from '../components/OrgByCount.vue';
 import fieldPairs from '../components/FieldPairs.vue';
 import Researchers from '../components/Researchers.vue';
 import AdminsByFunds from '../components/AdminByFunds.vue';
+import NavPage from '../components/NavPage.vue';
 
 Vue.use(Router);
 
@@ -13,6 +14,11 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: '/',
+      name: 'Navigation_Page',
+      component: NavPage,
+    },
     {
       path: '/projects',
       name: 'Project Search',

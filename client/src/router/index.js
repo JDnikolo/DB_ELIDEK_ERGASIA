@@ -4,6 +4,7 @@ import Project from '../components/Ping.vue';
 import Field from '../components/Fields.vue';
 import OrgByCount from '../components/OrgByCount.vue';
 import fieldPairs from '../components/FieldPairs.vue';
+import Researchers from '../components/Researchers.vue';
 
 Vue.use(Router);
 
@@ -30,6 +31,11 @@ export default new Router({
       path: '/fieldPairs',
       name: 'Common Research Field Pairs',
       component: fieldPairs,
+    },
+    {
+      path: '/researchers',
+      name: 'Researcher Search',
+      component: Researchers,
     },
   ],
 });

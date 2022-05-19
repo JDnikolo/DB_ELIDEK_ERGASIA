@@ -243,5 +243,52 @@ group by name1 order by num desc'''.format(subquery)
     return jsonify(result)
 
 
+@app.route('/researchers', methods=['GET'])
+def returnResearchers():
+    sql = 'select r_id,name,surname from researcher r '
+    where = ''
+    usewhere = False
+    age = request.args.get('age')
+    if age != None:
+        where = ' where '
+        usewhere = True
+        op = ''
+        if request.args.get('more') == 'true':
+            op += '>'
+        if request.args.get('less') == 'true':
+            op += '<'
+        op += '='
+        where += 'timestampdiff(year,r.date_of_birth,now()){}{} '.format(op, age)
+    proj = request.args.get('byProj')
+    active = request.args.get('byActive')
+    extrajoin = ''
+    if active == 'true':
+        proj = 'true'
+        extrajoin = 'join project p ON wi.e_id =p.e_id'
+        if usewhere:
+            where += ' and p.start_date <now() and p.end_date >now()'
+        else:
+            where += ' where p.start_date <now() and p.end_date >now()'
+    age = request.args.get('byAge')
+    extraorder = ''
+    if age == 'true':
+        extraorder = 'age,'
+    if proj == 'true':
+        sql = '''select count(*) as projs,r.name ,r.surname, timestampdiff(year,r.date_of_birth,now()) as age  from researcher r
+join works_in wi
+on wi.r_id =r.r_id 
+{}
+{}
+group by r.surname,r.name
+order by {}projs desc'''.format(extrajoin, where, extraorder)
+    else:
+        sql = 'select r_id,name,surname,timestampdiff(year,r.date_of_birth,now()) as age from researcher r {} order by {}r_id '.format(
+            where, extraorder)
+    print(sql)
+    mycursor.execute(sql)
+    result = mycursor.fetchall()
+    return jsonify(result)
+
+
 if __name__ == '__main__':
     app.run()

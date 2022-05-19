@@ -209,5 +209,39 @@ group by o.abrv {} order by proj1 desc '''.format(select, having)
     return jsonify(result)
 
 
+@app.route('/fieldPairs', methods=['GET'])
+def returnFieldPairs():
+    where = 'where p.e_id=po.e_id and '
+    usewhere = False
+    active = request.args.get('active')
+    inactive = request.args.get('inactive')
+    if active != None and active == 'false':
+        usewhere = True
+        where = where + \
+            'datediff(now() ,end_date)>0 '
+    if inactive != None and inactive == 'false':
+        if usewhere:
+            where += ' and '
+        else:
+            usewhere = True
+        where = where + \
+            'datediff(now() ,end_date)<=0 and datediff(now() ,start_date)>0 '
+    if usewhere:
+        subquery = 'where exists (select * from project p {}) '.format(where)
+    else:
+        subquery = ''
+    sql = '''SELECT count(*)as num,
+   CASE WHEN po.Name >po2.Name  THEN po2.Name  ELSE po.Name  END as name1,
+   CASE WHEN po.Name < po2.Name THEN po2.Name ELSE po.Name END as name2
+FROM part_of po join part_of po2
+on po.Name !=po2.Name  and po.e_id =po2.e_id 
+{}
+group by name1 order by num desc'''.format(subquery)
+    print(sql)
+    mycursor.execute(sql)
+    result = mycursor.fetchall()
+    return jsonify(result)
+
+
 if __name__ == '__main__':
     app.run()

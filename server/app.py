@@ -290,5 +290,35 @@ order by {}projs desc'''.format(extrajoin, where, extraorder)
     return jsonify(result)
 
 
+@app.route('/adminsByFunds', methods=['GET'])
+def returnAdminsByFunds():
+    where = ''
+    org = request.args.get("org")
+    if org != None and org != '':
+        where += ' where o.abrv="{}"'.format(org)
+    sql = '''select ea.name,ea.surname,p.abrv,o.full_name,SUM(p.funds) as total from project p 
+join elidek_admin ea 
+on p.admin_id =ea.admin_id 
+join organization o 
+on p.abrv =o.abrv 
+{}
+group by name,surname,abrv 
+order by total desc'''.format(where)
+    print(sql)
+    mycursor.execute(sql)
+    result = mycursor.fetchall()
+    return jsonify(result)
+
+
+@app.route('/orgs', methods=['GET'])
+def returnOrganisations():
+    # returns all organizations
+    sql = 'select abrv,full_name from organization o'
+    print(sql)
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    return jsonify(myresult)
+
+
 if __name__ == '__main__':
     app.run()

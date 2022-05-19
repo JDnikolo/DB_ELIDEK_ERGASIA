@@ -5,6 +5,7 @@ import Field from '../components/Fields.vue';
 import OrgByCount from '../components/OrgByCount.vue';
 import fieldPairs from '../components/FieldPairs.vue';
 import Researchers from '../components/Researchers.vue';
+import AdminsByFunds from '../components/AdminByFunds.vue';
 
 Vue.use(Router);
 
@@ -36,6 +37,11 @@ export default new Router({
       path: '/researchers',
       name: 'Researcher Search',
       component: Researchers,
+    },
+    {
+      path: '/adminsByFunding',
+      name: 'ELIDEK_Admins_By_Funding_Given',
+      component: AdminsByFunds,
     },
   ],
 });

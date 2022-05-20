@@ -1,6 +1,10 @@
 <template>
     <div>
+        <router-link to="/programs">ELIDEK Programs</router-link>
+        <p></p>
         <router-link to="/projects">Project Search</router-link>
+        <p></p>
+        <router-link to="/projectPerResearcher">View 1: Projects per Researcher</router-link>
         <p></p>
         <router-link to="/fields">Researchers & Projects By Field</router-link>
         <p></p>

@@ -7,6 +7,8 @@ import fieldPairs from '../components/FieldPairs.vue';
 import Researchers from '../components/Researchers.vue';
 import AdminsByFunds from '../components/AdminByFunds.vue';
 import NavPage from '../components/NavPage.vue';
+import Programs from '../components/Programs.vue';
+import View1 from '../components/View1ProjectResearcher.vue';
 
 Vue.use(Router);
 
@@ -18,6 +20,11 @@ export default new Router({
       path: '/',
       name: 'Navigation_Page',
       component: NavPage,
+    },
+    {
+      path: '/programs',
+      name: 'ELIDEK_Programs',
+      component: Programs,
     },
     {
       path: '/projects',
@@ -48,6 +55,11 @@ export default new Router({
       path: '/adminsByFunding',
       name: 'ELIDEK_Admins_By_Funding_Given',
       component: AdminsByFunds,
+    },
+    {
+      path: '/projectPerResearcher',
+      name: 'Projects_Per_Researcher_View',
+      component: View1,
     },
   ],
 });

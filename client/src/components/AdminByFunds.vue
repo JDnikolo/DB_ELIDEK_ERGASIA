@@ -20,7 +20,7 @@
                 <td>{{ index + 1 }}</td>
                 <td>{{ result[0] }} {{ result[1] }}</td>
                 <td>{{ result[3] }}</td>
-                <td>{{ Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(result[4]) }}</td>
+                <td>{{ Intl.NumberFormat('el-GR', { style: 'currency', currency: 'EUR' }).format(result[4]) }}</td>
             </tr>
         </table>
     </div>

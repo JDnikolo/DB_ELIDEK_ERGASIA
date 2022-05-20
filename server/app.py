@@ -332,5 +332,56 @@ def returnOrganisations():
     return jsonify(myresult)
 
 
+@app.route('/programs', methods=['GET'])
+def returnPrograms():
+    # returns ELIDEK programs
+    sql = 'select * from elidek_program ep'
+    print(sql)
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    return jsonify(myresult)
+
+
+@app.route('/projectOfProgram', methods=['GET'])
+def returnProjectsOfProgram():
+    # all projects that are part of an ELIDEK program.
+    p_id = request.args.get('p_id')
+    sql = 'select * from project p where p.p_id = {}'.format(p_id)
+    print(sql)
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    return jsonify(myresult)
+
+
+@app.route('/projectPerResearcher', methods=['GET'])
+def returnProjectsPerResearcher():
+    order = ''
+    where = ''
+    proj = request.args.get('byProj')
+    if proj == 'true':
+        order = 'order by title'
+    name = request.args.get('byName')
+    if name == 'true':
+        if order != '':
+            order += ',surname,name'
+        else:
+            order = 'order by surname,name'
+    active = request.args.get('active')
+    inactive = request.args.get('inactive')
+    if active == 'false':
+        where = 'where datediff(now() ,end_date)>0'
+    if inactive == 'false':
+        if where != '':
+            where += ' and datediff(now() ,end_date)<=0 and datediff(now() ,start_date)>=0 '
+        else:
+            where = 'where datediff(now() ,end_date)<=0 and datediff(now() ,start_date)>=0'
+    sql = 'select * from projects_per_researcher ppr {} {}'.format(
+        where, order)
+    print(sql)
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    return jsonify(myresult)
+
+
 if __name__ == '__main__':
     app.run()

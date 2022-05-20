@@ -27,6 +27,7 @@
                     v-on:change="getResults" />
                 Or Less
             </label>
+            <p></p>
             <label for="equalInConsec">
                 <input type="checkbox" id="equalInConsec" v-model="equalCons" :disabled="!consecutive"
                     v-on:change="getResults" />

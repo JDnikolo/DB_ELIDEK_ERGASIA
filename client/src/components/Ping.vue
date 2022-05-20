@@ -59,7 +59,9 @@
             </label>
         </div>
         <div id="details" v-show="showInfo" v-on:click="showInfo = false" @keyup.escape="showInfo = false">
-            <p> Project: {{ this.nameShown }}</p>
+            <div>
+                <p></p> Project: {{ this.nameShown }}<p></p>
+            </div>
             <p>Director: {{ staff[0][0] }} {{ staff[0][1] }}</p>
             <p>Researchers:</p>
             <p v-for="(name, index) in staff[1]" :key="index"> {{ name[0] }} {{ name[1] }}

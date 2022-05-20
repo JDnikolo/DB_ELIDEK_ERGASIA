@@ -29,7 +29,33 @@
                 <option v-for="year in years" v-bind="year" :key="year">{{ year }}</option>
             </select>
         </div>
-        <div>{{ results }}</div>
+        <div></div>
+        <table v-show="mode === 'project'">
+            <tr>
+                <th>Title</th>
+                <th>Summary</th>
+                <th>Funds</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+            <tr v-for="project in results" :key="project[0]">
+                <td>{{ project[1] }}</td>
+                <td>{{ project[2].substr(0, 50) }}...</td>
+                <td>{{ project[3] }}</td>
+                <td>{{ project[4].substr(5, 11) }}</td>
+                <td>{{ project[5].substr(5, 11) }}</td>
+            </tr>
+        </table>
+        <table v-show="mode === 'researcher'">
+            <thead>
+                <th>Name</th>
+                <th>Surname</th>
+            </thead>
+            <tr v-for="(result, index) in results" :key="index">
+                <td>{{ result[1] }}</td>
+                <td>{{ result[2] }}</td>
+            </tr>
+        </table>
     </div>
 </template>
 

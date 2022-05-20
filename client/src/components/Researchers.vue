@@ -66,7 +66,6 @@
                 <td>{{ result[3] }}</td>
             </tr>
         </table>
-        <div>{{ results }}</div>
     </div>
 </template>
 

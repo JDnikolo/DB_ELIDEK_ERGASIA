@@ -34,7 +34,26 @@
             </label>
         </div>
         <div>
-            {{ results }}
+            <table>
+                <thead>
+                    <th>Organisation</th>
+                    <th>Projects</th>
+                </thead>
+                <tr v-for="(result, index) in results" :key="index">
+                    <td v-if="!consecutive">
+                        {{ result[2] }}
+                    </td>
+                    <td v-if="!consecutive">
+                        {{ result[0] }}
+                    </td>
+                    <td v-if="consecutive">
+                        {{ result[3] }}
+                    </td>
+                    <td v-if="consecutive">
+                        {{ result[0] + result[1] }}
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </template>

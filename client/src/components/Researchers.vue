@@ -30,7 +30,7 @@
         </div>
         <label for="byProj">
             <input type="checkbox" id="byProj" v-model="byProj" v-on:change="getResults" :disabled="this.byActive">
-            projects they have worked on
+            all projects they have worked on
         </label>
         <label for="byActive">
             <input type="checkbox" id="byActive" v-model="byActive" v-on:change="getResults" :disabled="this.byProj">

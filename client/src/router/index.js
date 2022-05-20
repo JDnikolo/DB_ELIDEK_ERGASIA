@@ -9,6 +9,7 @@ import AdminsByFunds from '../components/AdminByFunds.vue';
 import NavPage from '../components/NavPage.vue';
 import Programs from '../components/Programs.vue';
 import View1 from '../components/View1ProjectResearcher.vue';
+import View2 from '../components/View2ProjectEvaluators.vue';
 
 Vue.use(Router);
 
@@ -60,6 +61,11 @@ export default new Router({
       path: '/projectPerResearcher',
       name: 'Projects_Per_Researcher_View',
       component: View1,
+    },
+    {
+      path: '/projectGradeEvaluators',
+      name: 'Project_grade_and_evaluator',
+      component: View2,
     },
   ],
 });

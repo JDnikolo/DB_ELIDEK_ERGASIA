@@ -6,6 +6,8 @@
         <p></p>
         <router-link to="/projectPerResearcher">View 1: Projects per Researcher</router-link>
         <p></p>
+        <router-link to="/projectGradeEvaluators">View 2: Projects, grades and evaluators</router-link>
+        <p></p>
         <router-link to="/fields">Researchers & Projects By Field</router-link>
         <p></p>
         <router-link to="/orgsByProjectNum">Organizations By Project Count</router-link>

@@ -383,5 +383,36 @@ def returnProjectsPerResearcher():
     return jsonify(myresult)
 
 
+@app.route('/projectGradeEvaluators', methods=['GET'])
+def projectGradeEvaluators():
+    where = ''
+    order = ''
+    byGrade = request.args.get('byGrade')
+    byName = request.args.get('byName')
+    if byGrade == 'true':
+        order = 'order by grade'
+    proj = request.args.get('byProj')
+    if proj == 'true':
+        if order != '':
+            order += ',title'
+        else:
+            order = 'order by title'
+    if byName == 'true':
+        if order != '':
+            order += ',surname,name'
+        else:
+            order = 'order by surname,name'
+
+    name = request.args.get('name')
+    if name != '' and name != None:
+        where = 'where LOCATE("{}",title)>0 '.format(name)
+
+    sql = 'select * from project_evaluators pe {} {}'.format(where, order)
+    print(sql)
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    return jsonify(myresult)
+
+
 if __name__ == '__main__':
     app.run()

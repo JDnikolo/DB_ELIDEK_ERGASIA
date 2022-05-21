@@ -9,7 +9,7 @@ mydb = mysql.connector.connect(
     host="localhost",
     user="root",
     password="",
-    database='test'
+    database='elidek_03115170'
 )
 mycursor = mydb.cursor()
 
@@ -117,11 +117,13 @@ def returnStaff():
     print(sql)
     mycursor.execute(sql)
     myresult = mycursor.fetchall()
+    print(myresult)
     sql = 'select name,surname from works_in wi join researcher r  where e_id={} and wi.r_id =r.r_id'.format(
         projectId)
     print(sql)
     mycursor.execute(sql)
     myresult.append(mycursor.fetchall())
+    print(myresult)
     return jsonify(myresult)
 
 
@@ -369,7 +371,7 @@ def returnProjectsPerResearcher():
     active = request.args.get('active')
     inactive = request.args.get('inactive')
     if active == 'false':
-        where = 'where datediff(now() ,end_date)>0'
+        where = 'where now()>end_date'
     if inactive == 'false':
         if where != '':
             where += ' and datediff(now() ,end_date)<=0 and datediff(now() ,start_date)>=0 '

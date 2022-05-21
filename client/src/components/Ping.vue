@@ -110,7 +110,7 @@ export default {
             msg: '',
             admin: '',
             allAdmins: [],
-            staff: [[], []],
+            staff: [[[], []]],
             nameShown: '',
             start_year: '',
             end_year: '',
@@ -174,7 +174,7 @@ export default {
             this.showInfo = false;
             let target = '';
             [target, this.nameShown] = project;
-            const directorID = project[8];
+            const directorID = project[6];
             path += `project=${target}&director=${directorID}`;
             axios.get(path)
                 .then((res) => {

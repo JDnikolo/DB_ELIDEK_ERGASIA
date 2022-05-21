@@ -32,7 +32,6 @@
                 <td>{{ result[4].substr(0, 100) }}</td>
             </tr>
         </table>
-        <div>{{ results }}</div>
     </div>
 </template>
 

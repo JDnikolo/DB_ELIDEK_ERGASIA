@@ -1,6 +1,7 @@
-drop database elidek_03115170;
 create database IF NOT EXISTS  ELIDEK_03115170;
 use ELIDEK_03115170;
+
+create user 
 
 CREATE TABLE Organization (
   abrv varchar(10) not null,
